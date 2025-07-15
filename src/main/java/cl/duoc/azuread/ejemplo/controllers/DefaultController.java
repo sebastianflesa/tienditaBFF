@@ -97,12 +97,13 @@ public class DefaultController {
 
 	@PostMapping(value = "/api/promos/listar", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> listarPromociones(@RequestBody String requestBody) {
-		HttpHeaders headers = new HttpHeaders();
-		HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		String url = tienditaventasUrl +"/"+ promoListarEndpoint;
+		String url = tienditaventasUrl + "/" + promoListarEndpoint;
 		System.out.println("Llamando al backend: " + url);
-		String response = restTemplate.postForObject(url,request, String.class);
+		System.out.println("Cuerpo enviado: " + requestBody);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
+		String response = restTemplate.postForObject(url, request, String.class);
 		System.out.println("Respuesta del backend: " + response);
 		return ResponseEntity.ok(response);
 	}
