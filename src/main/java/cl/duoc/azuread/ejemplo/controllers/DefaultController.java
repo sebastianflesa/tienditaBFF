@@ -95,17 +95,15 @@ public class DefaultController {
 		return ResponseEntity.ok(response);
 	}
 
-	@PostMapping(value = "/api/promos/listar", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/api/promos/listar", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String listarPromociones() {
 		String url = tienditaventasUrl + "/" + promoListarEndpoint;
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		String requestBody = "{}";
-		HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
+		HttpEntity<String> request = new HttpEntity<>(headers);
 		System.out.println("Llamando al backend: " + url);
-		String response = restTemplate.postForObject(url, request, String.class);
+		String response = restTemplate.getForObject(url, String.class);
 		System.out.println("Respuesta del backend: " + response);
 		return response;
 	}
-	
 }
