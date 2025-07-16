@@ -16,20 +16,12 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	@org.springframework.beans.factory.annotation.Value("${security.enabled:true}")
-	private boolean securityEnabled;
-
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.cors(Customizer.withDefaults());
-		if (securityEnabled) {
-			http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
-		} else {
-			http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
-				.csrf(csrf -> csrf.disable());
-		}
+		http.cors(Customizer.withDefaults()).authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+				.oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
 		return http.build();
 	}
+
 }
 
